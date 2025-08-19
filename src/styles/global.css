@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+  padding: 0 2vw;
+}
+
+.main-content-area {
+  min-height: 500px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Utility Classes */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: #666666;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #888888;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #666666;
+  color: #666666;
+}
+
+.btn-secondary:hover {
+  background: #666666;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0;
+  }
+  
+  .content-grid {
+    gap: 20px;
+    padding: 0 15px;
+  }
+}
+
+/* Loading States */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #888888;
+}
+
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #333333;
+  border-top: 2px solid #666666;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 
+
+/* Make only icons greyscale, not content images */
+svg, 
+[class*="icon"], 
+[class*="Icon"],
+.fa, .fas, .far, .fab, /* Font Awesome icons */
+.material-icons, /* Material Icons */
+.tab-icon, /* Navigation tab icons */
+.search-btn /* Search button icon */
+{
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+/* Optional: Add color on hover for icons only */
+svg:hover, 
+[class*="icon"]:hover, 
+[class*="Icon"]:hover,
+.fa:hover, .fas:hover, .far:hover, .fab:hover,
+.material-icons:hover,
+.tab-icon:hover,
+.search-btn:hover {
+  filter: grayscale(0%);
+} 

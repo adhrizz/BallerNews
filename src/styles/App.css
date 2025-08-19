@@ -1,0 +1,60 @@
+.app {
+  min-height: 100vh;
+  background: #000000;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Content Grid Layout */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2vw;
+  margin-top: 40px;
+  padding: 0 2vw;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 140px;
+  height: fit-content;
+}
+
+@media (max-width: 1200px) {
+  .content-grid {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .sidebar {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .content-grid {
+    gap: 20px;
+    padding: 0 15px;
+  }
+} 
