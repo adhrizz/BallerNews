@@ -5,10 +5,8 @@ const Navigation = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { id: 'home', label: 'HOME'},
     { id: 'news', label: 'NEWS' },
-    { id: 'live', label: 'LIVE' },
-    { id: 'standings', label: 'STANDINGS'},
-    { id: 'teams', label: 'TEAMS' },
-    { id: 'updates', label: 'UPDATES' }
+    { id: 'feed', label: 'FEED' },
+    { id: 'standings', label: 'STANDINGS'}
   ];
 
   return (

@@ -4,7 +4,7 @@
   padding: 60px 0; /* remove horizontal padding */
   position: relative;
   overflow: hidden;
-  min-height: calc(100vh - 130px); /* fill to fold (header+nav approx) */
+  min-height: calc(100vh - 70px); /* fill to fold (header height) */
   display: flex;
   align-items: center;
 }
@@ -173,7 +173,7 @@
 
 @media (max-width: 1024px) {
   .hero {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 70px);
   }
   .hero-container {
     grid-template-columns: 1fr;
@@ -187,6 +187,7 @@
 @media (max-width: 768px) {
   .hero {
     padding: 40px 0;
+    min-height: calc(100vh - 60px);
   }
   .hero-container {
     grid-template-columns: 1fr;
@@ -194,34 +195,40 @@
     text-align: center;
     padding: 0 15px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-actions {
     justify-content: center;
     flex-wrap: wrap;
   }
-  
+
   .hero-stats {
     justify-content: center;
     gap: 30px;
   }
-  
+
   .hero-visual {
     height: clamp(300px, 46vh, 560px);
   }
-  
+
   .floating-card {
     padding: 15px;
   }
-  
+
   .card-icon {
     font-size: 1.5rem;
   }
-  
+
   .card-text {
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: calc(100vh - 55px);
   }
 } 

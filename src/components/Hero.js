@@ -19,11 +19,11 @@ const Hero = ({ setActiveTab }) => {
               Your Ultimate Football Destination
             </h1>
             <p className="hero-subtitle">
-              Stay updated with the latest news, live scores, transfer updates, and everything football from around the world.
+              Stay updated with the latest news, live matches, and standings from around the football world.
             </p>
             <div className="hero-actions">
               <button className="hero-btn primary" onClick={go('news')}>Explore News</button>
-              <button className="hero-btn secondary" onClick={go('live')}>Live Matches</button>
+              <button className="hero-btn secondary" onClick={go('standings')}>View Standings</button>
             </div>
           </div>
           <div className="hero-stats">
@@ -43,19 +43,21 @@ const Hero = ({ setActiveTab }) => {
         </div>
         <div className="hero-visual">
           <div className="hero-image">
+
             <div
               className="floating-card card-1"
-              onClick={go('live')}
+              onClick={go('standings')}
               role="button"
               tabIndex={0}
-              onKeyDown={onKey('live')}
-              aria-label="Go to Live Matches"
+              onKeyDown={onKey('standings')}
+              aria-label="Go to Standings"
             >
               <div className="card-content">
-                <span className="card-icon">⚽</span>
-                <span className="card-text">Live Scores</span>
+                <span className="card-icon">🏆</span>
+                <span className="card-text">League Standings</span>
               </div>
             </div>
+
             <div
               className="floating-card card-2"
               onClick={go('news')}
@@ -69,17 +71,37 @@ const Hero = ({ setActiveTab }) => {
                 <span className="card-text">Latest News</span>
               </div>
             </div>
+
             <div
-              className="floating-card card-3"
-              onClick={go('updates')}
+              className="floating-card card-4"
+              onClick={go('feed')}
               role="button"
               tabIndex={0}
-              onKeyDown={onKey('updates')}
-              aria-label="Go to Transfer Updates"
+              onKeyDown={onKey('feed')}
+              aria-label="Go to Feed"
             >
               <div className="card-content">
-                <span className="card-icon">🔄</span>
-                <span className="card-text">Transfer Updates</span>
+                <span className="card-icon">📜</span>
+                <span className="card-text">Feed</span>
+              </div>
+            </div>
+            
+            <div
+              className="floating-card card-3"
+              onClick={() => window.scrollTo({ top: document.querySelector('.sidebar').offsetTop, behavior: 'smooth' })}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  window.scrollTo({ top: document.querySelector('.sidebar').offsetTop, behavior: 'smooth' });
+                }
+              }}
+              aria-label="View Live Matches"
+            >
+              <div className="card-content">
+                <span className="card-icon">⚽</span>
+                <span className="card-text">Live Matches</span>
               </div>
             </div>
           </div>

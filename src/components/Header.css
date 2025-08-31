@@ -38,6 +38,8 @@
 }
 
 .nav-link {
+  background: none;
+  border: none;
   color: #ffffff;
   text-decoration: none;
   font-weight: 600;
@@ -45,9 +47,14 @@
   padding: 8px 0;
   position: relative;
   transition: color 0.3s ease;
+  cursor: pointer;
 }
 
 .nav-link:hover {
+  color: #888888;
+}
+
+.nav-link.active {
   color: #888888;
 }
 
@@ -58,11 +65,12 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: #666666;
+  background: #888888;
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -148,14 +156,24 @@
 @media (max-width: 768px) {
   .header-container {
     padding: 0 15px;
+    height: 60px;
   }
   
   .header-left {
-    gap: 20px;
+    gap: 15px;
+  }
+  
+  .logo h1 {
+    font-size: 1.5rem;
   }
   
   .header-nav {
-    display: none;
+    gap: 15px;
+  }
+  
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 6px 0;
   }
   
   .search-container {
@@ -170,5 +188,39 @@
   .btn-primary {
     padding: 6px 12px;
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 10px;
+    height: 55px;
+  }
+  
+  .header-left {
+    gap: 10px;
+  }
+  
+  .logo h1 {
+    font-size: 1.3rem;
+  }
+  
+  .header-nav {
+    gap: 10px;
+  }
+  
+  .nav-link {
+    font-size: 0.7rem;
+    padding: 4px 0;
+  }
+  
+  .user-actions {
+    gap: 3px;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    padding: 4px 8px;
+    font-size: 0.7rem;
   }
 } 

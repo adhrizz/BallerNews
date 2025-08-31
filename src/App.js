@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import NewsGrid from './components/NewsGrid';
 import LiveMatches from './components/LiveMatches';
+import NewsFeed from './components/NewsFeed';
 import Standings from './components/Standings';
-import Teams from './components/Teams';
-import Updates from './components/Updates';
 import './styles/App.css';
 
 function App() {
@@ -51,8 +49,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
-      <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="main-content">
         {activeTab === 'home' && (
@@ -71,10 +68,8 @@ function App() {
         )}
         
         {activeTab === 'news' && <NewsGrid news={news} loading={loading} />}
-        {activeTab === 'live' && <LiveMatches matches={liveMatches} />}
+        {activeTab === 'feed' && <NewsFeed />}
         {activeTab === 'standings' && <Standings />}
-        {activeTab === 'teams' && <Teams />}
-        {activeTab === 'updates' && <Updates />}
       </main>
     </div>
   );

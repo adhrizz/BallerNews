@@ -7,10 +7,7 @@
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .section-header h3 {
@@ -20,46 +17,30 @@
   margin: 0;
 }
 
-.refresh-btn {
-  background: #666666;
-  border: none;
-  color: white;
-  padding: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.refresh-btn:hover {
-  background: #888888;
-  transform: rotate(180deg);
-}
-
 .matches-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .match-card {
   background: #444444;
-  border-radius: 10px;
-  padding: 15px;
-  border-left: 4px solid #666666;
+  border-radius: 15px;
+  padding: 20px;
+  border-left: 4px solid #888888;
   transition: all 0.3s ease;
 }
 
 .match-card:hover {
+  background: #555555;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .match-teams {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .team {
@@ -76,9 +57,9 @@
 }
 
 .team-name {
+  font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  font-size: 0.9rem;
 }
 
 .match-score {
@@ -89,60 +70,47 @@
 }
 
 .score {
-  background: #666666;
-  color: white;
-  padding: 5px 15px;
-  border-radius: 20px;
+  font-size: 1.2rem;
   font-weight: 700;
-  font-size: 1rem;
-}
-
-.match-status {
-  background: #888888;
-  color: white;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.match-info {
-  text-align: center;
-  margin-top: 10px;
+  color: #888888;
 }
 
 .match-time {
-  color: #888888;
   font-size: 0.8rem;
+  font-weight: 600;
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #ff4444;
 }
 
-.no-matches {
-  text-align: center;
-  padding: 40px 20px;
+.match-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
   color: #888888;
 }
 
-.no-matches p {
-  margin: 0;
+.competition {
+  font-weight: 500;
 }
 
-.sub-text {
-  font-size: 0.9rem;
-  opacity: 0.7;
-  margin-top: 5px !important;
+.venue {
+  font-style: italic;
 }
 
 .loading-matches {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .match-card-skeleton {
   background: #444444;
-  border-radius: 10px;
-  padding: 15px;
+  border-radius: 15px;
+  padding: 20px;
   border-left: 4px solid #555555;
 }
 
@@ -152,7 +120,7 @@
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .skeleton-score {
@@ -174,6 +142,17 @@
   }
 }
 
+.no-matches {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888888;
+}
+
+.no-matches p {
+  margin: 0;
+  font-size: 1rem;
+}
+
 @media (max-width: 768px) {
   .live-matches-container {
     padding: 15px;
@@ -192,4 +171,4 @@
   .match-score {
     order: -1;
   }
-} 
+}
