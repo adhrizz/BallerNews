@@ -5,7 +5,7 @@
 const config = {
     // Football-Data.org configuration (Primary - Free tier available)
     footballDataAPI: {
-        key: process.env.FOOTBALL_DATA_API_KEY || '021a035b56be4e8586446a58df74102e',
+        key: process.env.FOOTBALL_DATA_API_KEY || 'b1e4a221229e42c9b0fbe7c50be054f7',
         baseURL: 'https://api.football-data.org/v4'
     },
     
