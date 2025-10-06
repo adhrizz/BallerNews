@@ -1,13 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './NewsGrid.css';
 
 const NewsGrid = ({ news, loading }) => {
+  const [focusedCardIndex, setFocusedCardIndex] = useState(-1);
+  const cardRefs = useRef([]);
+
   // Add click handler function
   const handleCardClick = (url) => {
     if (url) {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
+
+  useEffect(() => {
+    cardRefs.current = cardRefs.current.slice(0, news.length);
+  }, [news]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') {
+        setFocusedCardIndex((prevIndex) =>
+          prevIndex === news.length - 1 ? 0 : prevIndex + 1
+        );
+      } else if (e.key === 'ArrowLeft') {
+        setFocusedCardIndex((prevIndex) =>
+          prevIndex <= 0 ? news.length - 1 : prevIndex - 1
+        );
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [news.length]);
+
+  useEffect(() => {
+    if (focusedCardIndex !== -1 && cardRefs.current[focusedCardIndex]) {
+      cardRefs.current[focusedCardIndex].focus();
+    }
+  }, [focusedCardIndex]);
 
   if (loading) {
     return (
@@ -53,7 +85,8 @@ const NewsGrid = ({ news, loading }) => {
         {news.map((article, index) => (
           <div 
             key={index} 
-            className="news-card"
+            ref={(el) => (cardRefs.current[index] = el)}
+            className={`news-card ${focusedCardIndex === index ? 'focused' : ''}`}
             onClick={() => handleCardClick(article.url)}
             role="button"
             tabIndex={0}

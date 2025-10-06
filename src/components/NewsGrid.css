@@ -93,6 +93,11 @@
   height: 300px;
 }
 
+.news-card.focused {
+  outline: 3px solid #00aaff; /* A bright blue outline */
+  box-shadow: 0 0 15px rgba(0, 170, 255, 0.7); /* A glowing effect */
+}
+
 /* External link indicator */
 .news-card::after {
   content: '↗';

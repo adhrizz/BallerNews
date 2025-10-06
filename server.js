@@ -2,17 +2,33 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const axios = require("axios");
+const NodeCache = require("node-cache");
 const config = require("./config");
 
 const app = express();
 const PORT = config.port;
+const cache = new NodeCache({ stdTTL: 300 });
 
 // Middleware
 app.use(express.json());
 app.use(express.static("public"));
 
+const cacheMiddleware = (req, res, next) => {
+    const key = req.originalUrl;
+    const cachedData = cache.get(key);
+    if (cachedData) {
+        return res.json(cachedData);
+    }
+    res.sendResponse = res.json;
+    res.json = (body) => {
+        cache.set(key, body);
+        res.sendResponse(body);
+    };
+    next();
+};
+
 // Football API helper functions
-async function fetchFromFootballDataAPI(endpoint) {
+async function fetchFromFootballDataAPI(endpoint, retries = 3, delay = 1000) {
     try {
         const response = await axios.get(
             `${config.footballDataAPI.baseURL}${endpoint}`,
@@ -24,12 +40,19 @@ async function fetchFromFootballDataAPI(endpoint) {
         );
         return response.data;
     } catch (error) {
+        if (error.response && error.response.status === 429 && retries > 0) {
+            console.warn(
+                `Football Data API rate limit exceeded. Retrying in ${delay / 1000}s...`,
+            );
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return fetchFromFootballDataAPI(endpoint, retries - 1, delay * 2);
+        }
         console.error("Football Data API Error:", error.message);
         return null;
     }
 }
 
-async function fetchFromFootballAPI(endpoint, params = {}) {
+async function fetchFromFootballAPI(endpoint, params = {}, retries = 3, delay = 1000) {
     try {
         const response = await axios.get(
             `${config.footballAPI.baseURL}${endpoint}`,
@@ -43,13 +66,20 @@ async function fetchFromFootballAPI(endpoint, params = {}) {
         );
         return response.data;
     } catch (error) {
+        if (error.response && error.response.status === 429 && retries > 0) {
+            console.warn(
+                `Football API rate limit exceeded. Retrying in ${delay / 1000}s...`,
+            );
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return fetchFromFootballAPI(endpoint, params, retries - 1, delay * 2);
+        }
         console.error("Football API Error:", error.message);
         return null;
     }
 }
 
 // News API helper functions
-async function fetchFromNewsAPI(endpoint, params = {}) {
+async function fetchFromNewsAPI(endpoint, params = {}, retries = 3, delay = 1000) {
     try {
         const response = await axios.get(
             `${config.newsAPI.baseURL}${endpoint}`,
@@ -62,12 +92,19 @@ async function fetchFromNewsAPI(endpoint, params = {}) {
         );
         return response.data;
     } catch (error) {
+        if (error.response && error.response.status === 429 && retries > 0) {
+            console.warn(
+                `News API rate limit exceeded. Retrying in ${delay / 1000}s...`,
+            );
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return fetchFromNewsAPI(endpoint, params, retries - 1, delay * 2);
+        }
         console.error("News API Error:", error.message);
         return null;
     }
 }
 
-async function fetchFromGNewsAPI(endpoint, params = {}) {
+async function fetchFromGNewsAPI(endpoint, params = {}, retries = 3, delay = 1000) {
     try {
         const response = await axios.get(
             `${config.gNewsAPI.baseURL}${endpoint}`,
@@ -80,6 +117,13 @@ async function fetchFromGNewsAPI(endpoint, params = {}) {
         );
         return response.data;
     } catch (error) {
+        if (error.response && error.response.status === 429 && retries > 0) {
+            console.warn(
+                `GNews API rate limit exceeded. Retrying in ${delay / 1000}s...`,
+            );
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return fetchFromGNewsAPI(endpoint, params, retries - 1, delay * 2);
+        }
         console.error("GNews API Error:", error.message);
         return null;
     }
@@ -91,7 +135,7 @@ app.get("/", (req, res) => {
 });
 
 // Football API Routes - Live matches and standings
-app.get("/api/football/live-matches", async (req, res) => {
+app.get("/api/football/live-matches", cacheMiddleware, async (req, res) => {
     try {
         // Try Football-Data.org first (primary)
         let liveMatches = await fetchFromFootballDataAPI(
@@ -152,19 +196,22 @@ app.get("/api/news/football", async (req, res) => {
     try {
         const { source = "all", page = 1 } = req.query;
 
+        const soccerQuery =
+            '(soccer OR "association football" OR "premier league" OR "champions league" OR "la liga" OR "bundesliga" OR "serie a" OR "ligue 1") NOT (NFL OR "american football" OR "super bowl")';
+
         // Try NewsAPI.org first
         let news = await fetchFromNewsAPI("/everything", {
-            q: "(football OR soccer) AND (premier league OR champions league OR la liga OR bundesliga OR serie a OR ligue 1)",
+            q: soccerQuery,
             language: "en",
             sortBy: "publishedAt",
             pageSize: 20,
             page: page,
         });
 
-        if (!news || !news.articles) {
+        if (!news || !news.articles || news.articles.length === 0) {
             // Fallback to GNews
             news = await fetchFromGNewsAPI("/search", {
-                q: "football Premier League Champions League La Liga Bundesliga Serie A Ligue 1",
+                q: soccerQuery,
                 lang: "en",
                 country: "us",
                 max: 20,
@@ -173,11 +220,31 @@ app.get("/api/news/football", async (req, res) => {
 
         if (news) {
             if (news.articles) {
+                const americanFootballTerms = [
+                    "nfl",
+                    "super bowl",
+                    "touchdown",
+                    "quarterback",
+                    "gridiron",
+                    "kansas city chiefs",
+                    "philadelphia eagles",
+                    "american football",
+                ];
+
                 news.articles = news.articles.filter((article) => {
                     const title = article.title?.toLowerCase() || "";
                     const description =
                         article.description?.toLowerCase() || "";
                     const content = article.content?.toLowerCase() || "";
+                    const textToSearch = `${title} ${description} ${content}`;
+
+                    const hasAmericanFootballTerm = americanFootballTerms.some(
+                        (term) => textToSearch.includes(term),
+                    );
+
+                    if (hasAmericanFootballTerm) {
+                        return false;
+                    }
 
                     const footballTerms = [
                         "football",
@@ -200,11 +267,8 @@ app.get("/api/news/football", async (req, res) => {
                         "goalkeeper",
                     ];
 
-                    return footballTerms.some(
-                        (term) =>
-                            title.includes(term) ||
-                            description.includes(term) ||
-                            content.includes(term),
+                    return footballTerms.some((term) =>
+                        textToSearch.includes(term),
                     );
                 });
             }
