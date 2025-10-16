@@ -4,12 +4,22 @@ const path = require("path");
 const axios = require("axios");
 const NodeCache = require("node-cache");
 const config = require("./config");
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+mongoose.connect(config.mongoURI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+
 
 const app = express();
 const PORT = config.port;
 const cache = new NodeCache({ stdTTL: 300 });
 
+const cors = require('cors');
+
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
@@ -130,6 +140,8 @@ async function fetchFromGNewsAPI(endpoint, params = {}, retries = 3, delay = 100
 }
 
 // Routes
+app.use('/api/auth', require('./routes/auth'));
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });

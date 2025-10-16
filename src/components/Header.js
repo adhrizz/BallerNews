@@ -1,13 +1,17 @@
 import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
-const Header = ({ activeTab, setActiveTab }) => {
-  const tabs = [
-    { id: 'home', label: 'HOME'},
-    { id: 'news', label: 'NEWS' },
-    { id: 'feed', label: 'FEED' },
-    { id: 'standings', label: 'STANDINGS'}
-  ];
+const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { token, logout } = useAuth();
+
+  const handleLogout = ()_> {
+    logout();
+    navigate('/');
+  };
 
   return (
     <header className="header">
@@ -17,22 +21,23 @@ const Header = ({ activeTab, setActiveTab }) => {
             <h1>Ballers</h1>
           </div>
           <nav className="header-nav">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                className={`nav-link ${activeTab === tab.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
+            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>HOME</Link>
+            <Link to="/news" className={`nav-link ${location.pathname.startsWith('/news') ? 'active' : ''}`}>NEWS</Link>
+            <Link to="/feed" className={`nav-link ${location.pathname.startsWith('/feed') ? 'active' : ''}`}>FEED</Link>
+            <Link to="/standings" className={`nav-link ${location.pathname.startsWith('/standings') ? 'active' : ''}`}>STANDINGS</Link>
           </nav>
         </div>
         
         <div className="header-right">
           <div className="user-actions">
-            <button className="btn-secondary">Sign In</button>
-            <button className="btn-primary">Subscribe</button>
+            {token ? (
+              <button onClick={handleLogout} className="btn-primary">Logout</button>
+            ) : (
+              <>
+                <button onClick={() => navigate('/login')} className="btn-secondary">Sign In</button>
+                <button onClick={() => navigate('/signup')} className="btn-primary">Sign Up</button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -40,4 +45,4 @@ const Header = ({ activeTab, setActiveTab }) => {
   );
 };
 
-export default Header; 
+export default Header;
