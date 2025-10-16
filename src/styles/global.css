@@ -31,7 +31,7 @@ code {
   flex: 1;
   max-width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 70px 0 0 0; /* Add top padding to offset header */
   width: 100%;
 }
 
@@ -101,12 +101,18 @@ code {
 
 @media (max-width: 768px) {
   .main-content {
-    padding: 0;
+    padding-top: 60px; /* Adjust for smaller header */
   }
   
   .content-grid {
     gap: 20px;
     padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding-top: 55px; /* Adjust for mobile header */
   }
 }
 

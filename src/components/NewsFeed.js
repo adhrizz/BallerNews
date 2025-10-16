@@ -22,7 +22,7 @@ const NewsFeed = () => {
       if (data.articles) {
         setNews(data.articles);
       }
-    } catch (error) => {
+    } catch (error) {
       console.error('Error fetching news:', error);
     } finally {
       setLoading(false);

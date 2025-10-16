@@ -57,6 +57,7 @@
   border: none;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-decoration: none; /* Remove underline from links */
 }
 
 .hero-btn.primary {
@@ -126,6 +127,8 @@
   border: 1px solid rgba(102,102,102,0.2);
   animation: float 6s ease-in-out infinite;
   cursor: pointer; /* indicate clickable */
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit text color */
 }
 
 .card-1 {
@@ -231,4 +234,4 @@
   .hero {
     min-height: calc(100vh - 55px);
   }
-} 
+}

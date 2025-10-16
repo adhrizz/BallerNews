@@ -141,10 +141,7 @@ async function fetchFromGNewsAPI(endpoint, params = {}, retries = 3, delay = 100
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+app.use('/api/test', require('./routes/test'));
 
 // Football API Routes - Live matches and standings
 app.get("/api/football/live-matches", cacheMiddleware, async (req, res) => {

@@ -29,7 +29,9 @@ const config = {
     },
     
     // Server configuration
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+    mongoURI: process.env.MONGO_URI || 'YOUR_MONGO_URI_HERE',
+    jwtSecret: process.env.JWT_SECRET || 'YOUR_JWT_SECRET_HERE'
 };
 
 module.exports = config; 

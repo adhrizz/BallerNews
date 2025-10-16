@@ -1,3 +1,4 @@
+import './styles/global.css';
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -6,10 +7,11 @@ import NewsGrid from './components/NewsGrid';
 import LiveMatches from './components/LiveMatches';
 import NewsFeed from './components/NewsFeed';
 import Standings from './components/Standings';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import './styles/App.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home');
   const [news, setNews] = useState([]);
   const [liveMatches, setLiveMatches] = useState([]);
   const [standings, setStandings] = useState([]);
@@ -49,30 +51,33 @@ function App() {
 
   return (
     <div className="app">
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header />
       
       <main className="main-content">
-        {activeTab === 'home' && (
-          <>
-            <Hero setActiveTab={setActiveTab} />
-            <div className="content-grid">
-              <div className="main-content-area">
-                <NewsGrid news={news} loading={loading} />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <div className="content-grid">
+                <div className="main-content-area">
+                  <NewsGrid news={news} loading={loading} />
+                </div>
+                <div className="sidebar">
+                  <LiveMatches matches={liveMatches} />
+                  <Standings />
+                </div>
               </div>
-              <div className="sidebar">
-                <LiveMatches matches={liveMatches} />
-                <Standings />
-              </div>
-            </div>
-          </>
-        )}
-        
-        {activeTab === 'news' && <NewsGrid news={news} loading={loading} />}
-        {activeTab === 'feed' && <NewsFeed />}
-        {activeTab === 'standings' && <Standings />}
+            </>
+          } />
+          <Route path="/news" element={<NewsGrid news={news} loading={loading} />} />
+          <Route path="/feed" element={<NewsFeed />} />
+          <Route path="/standings" element={<Standings />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
       </main>
     </div>
   );
 }
 
-export default App; 
+export default App;

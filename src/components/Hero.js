@@ -1,15 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Hero.css';
 
-const Hero = ({ setActiveTab }) => {
-  const go = (tab) => () => setActiveTab && setActiveTab(tab);
-  const onKey = (tab) => (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      setActiveTab && setActiveTab(tab);
-    }
-  };
-
+const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-container">
@@ -22,8 +15,8 @@ const Hero = ({ setActiveTab }) => {
               Stay updated with the latest news, live matches, and standings from around the football world.
             </p>
             <div className="hero-actions">
-              <button className="hero-btn primary" onClick={go('news')}>Explore News</button>
-              <button className="hero-btn secondary" onClick={go('standings')}>View Standings</button>
+              <Link to="/news" className="hero-btn primary">Explore News</Link>
+              <Link to="/standings" className="hero-btn secondary">View Standings</Link>
             </div>
           </div>
           <div className="hero-stats">
@@ -43,49 +36,27 @@ const Hero = ({ setActiveTab }) => {
         </div>
         <div className="hero-visual">
           <div className="hero-image">
-
-            <div
-              className="floating-card card-1"
-              onClick={go('standings')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={onKey('standings')}
-              aria-label="Go to Standings"
-            >
+            <Link to="/standings" className="floating-card card-1" aria-label="Go to Standings">
               <div className="card-content">
                 <span className="card-icon">🏆</span>
                 <span className="card-text">League Standings</span>
               </div>
-            </div>
+            </Link>
 
-            <div
-              className="floating-card card-2"
-              onClick={go('news')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={onKey('news')}
-              aria-label="Go to Latest News"
-            >
+            <Link to="/news" className="floating-card card-2" aria-label="Go to Latest News">
               <div className="card-content">
                 <span className="card-icon">📰</span>
                 <span className="card-text">Latest News</span>
               </div>
-            </div>
+            </Link>
 
-            <div
-              className="floating-card card-4"
-              onClick={go('feed')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={onKey('feed')}
-              aria-label="Go to Feed"
-            >
+            <Link to="/feed" className="floating-card card-4" aria-label="Go to Feed">
               <div className="card-content">
                 <span className="card-icon">📜</span>
                 <span className="card-text">Feed</span>
               </div>
-            </div>
-            
+            </Link>
+
             <div
               className="floating-card card-3"
               onClick={() => window.scrollTo({ top: document.querySelector('.sidebar').offsetTop, behavior: 'smooth' })}
@@ -111,4 +82,4 @@ const Hero = ({ setActiveTab }) => {
   );
 };
 
-export default Hero; 
+export default Hero;

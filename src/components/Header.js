@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { token, logout } = useAuth();
 
-  const handleLogout = ()_> {
+  const handleLogout = () => {
     logout();
     navigate('/');
   };
@@ -29,16 +29,16 @@ const Header = () => {
         </div>
         
         <div className="header-right">
-          <div className="user-actions">
+          <nav className="header-nav">
             {token ? (
-              <button onClick={handleLogout} className="btn-primary">Logout</button>
+              <button onClick={handleLogout} className="nav-link">LOGOUT</button>
             ) : (
               <>
-                <button onClick={() => navigate('/login')} className="btn-secondary">Sign In</button>
-                <button onClick={() => navigate('/signup')} className="btn-primary">Sign Up</button>
+                <Link to="/login" className={`nav-link ${location.pathname.startsWith('/login') ? 'active' : ''}`}>SIGN IN</Link>
+                <Link to="/signup" className={`nav-link ${location.pathname.startsWith('/signup') ? 'active' : ''}`}>SIGN UP</Link>
               </>
             )}
-          </div>
+          </nav>
         </div>
       </div>
     </header>

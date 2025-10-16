@@ -1,17 +1,20 @@
 .header {
-  background: #000000;
-  color: white;
-  padding: 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0 2vw;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .header-container {
-  max-width: 100%;
-  margin: 0;
-  padding: 0 2vw;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,147 +83,46 @@
   gap: 20px;
 }
 
-.search-container {
-  display: flex;
-  align-items: center;
-  background: #333333;
-  border-radius: 25px;
-  padding: 8px 15px;
-  border: 1px solid #444444;
-}
-
-.search-input {
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  width: 200px;
-  font-size: 0.9rem;
-}
-
-.search-input::placeholder {
-  color: #888888;
-}
-
-.search-btn {
-  background: none;
-  border: none;
-  color: #888888;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background 0.3s ease;
-}
-
-.search-btn:hover {
-  background: #444444;
-}
-
-.user-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 1px solid #666666;
-  color: #666666;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background: #666666;
-  color: #ffffff;
-}
-
-.btn-primary {
-  background: #666666;
-  border: 1px solid #666666;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: #888888;
-  border-color: #888888;
-}
-
 @media (max-width: 768px) {
-  .header-container {
+  .header {
     padding: 0 15px;
+  }
+  .header-container {
     height: 60px;
   }
-  
   .header-left {
     gap: 15px;
   }
-  
   .logo h1 {
     font-size: 1.5rem;
   }
-  
   .header-nav {
     gap: 15px;
   }
-  
   .nav-link {
     font-size: 0.8rem;
     padding: 6px 0;
   }
-  
-  .search-container {
-    display: none;
-  }
-  
-  .user-actions {
-    gap: 5px;
-  }
-  
-  .btn-secondary,
-  .btn-primary {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 480px) {
-  .header-container {
+  .header {
     padding: 0 10px;
+  }
+  .header-container {
     height: 55px;
   }
-  
   .header-left {
     gap: 10px;
   }
-  
   .logo h1 {
     font-size: 1.3rem;
   }
-  
   .header-nav {
     gap: 10px;
   }
-  
   .nav-link {
     font-size: 0.7rem;
     padding: 4px 0;
   }
-  
-  .user-actions {
-    gap: 3px;
-  }
-  
-  .btn-secondary,
-  .btn-primary {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-  }
-} 
+}

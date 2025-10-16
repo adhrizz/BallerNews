@@ -7,30 +7,36 @@
 - `npm run dev:react` - Start React dev server (port 3001)
 
 ## Code Style Guidelines
-- **Imports**: Group React imports first, then third-party, then local
-- **Components**: Use functional components with hooks, PascalCase naming
-- **Error Handling**: Use try/catch with proper error logging
-- **State**: Use useState/useEffect hooks, avoid class components
-- **API Calls**: Use fetch with async/await, handle loading states
-- **Styling**: CSS modules with BEM naming convention
+- **Imports**: Group React imports first, then third-party, then local.
+- **Components**: Use functional components with hooks and PascalCase naming.
+- **Error Handling**: Use try/catch for async operations with console logging.
+- **State**: Manage state with `useState` and `useEffect` hooks.
+- **API Calls**: Use `fetch` or `axios` with async/await and handle loading states.
+- **Styling**: Standard CSS with BEM-style naming conventions in component-specific files.
+- **Backend**: Node.js/Express with clear, commented routes and middleware.
 
 ## Project Structure
 - `/src` - React components and styles
-- `/public` - Built assets and HTML template
-- `/server.js` - Express API server
-- `/config.js` - API configuration
+- `/public` - Built assets and `index.html`
+- `/server.js` - Express API server with caching and API fetching logic
+- `/config.js` - API keys and configuration
+- `webpack.config.js` - Webpack configuration for the React app
 
 ## Testing
-- Server runs on port 3000, React dev on 3001
-- API endpoints: `/api/news/football`, `/api/football/live-matches`
-- Test API with: `node test-api.js`
+- No formal testing framework is set up.
+- API endpoints can be manually tested using `node test-api.js`.
+- Key API endpoints include `/api/news/football` and `/api/football/live-matches`.
+
+## Key Libraries
+- **React**: Frontend UI library
+- **Express**: Backend server framework
+- **Axios**: HTTP client for API requests
+- **Webpack**: Module bundler for the React application
+- **Babel**: JavaScript compiler
+- **Nodemon**: Automatic server restarts during development
 
 ## Development Workflow
-1. Start backend: `npm run dev`
-2. Start frontend: `npm run dev:react`
-3. Build for production: `npm run build`
-
-## API Integration
-- Configure API keys in `config.js`
-- Supports API-Football and Football-Data.org
-- Uses caching with node-cache for rate limiting
+1. Configure API keys in `config.js`.
+2. Start the backend server: `npm run dev`
+3. Start the frontend dev server: `npm run dev:react`
+4. Access the application at `http://localhost:3001`.
